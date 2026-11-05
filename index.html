@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Letter ❤️</title>
+  <style>
+    :root {
+      --bg: #fff0e9;
+      --pink: #e88b9b;
+      --dark: #3b2030;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f8e4e5;
+      font-family: Arial, sans-serif;
+      color: var(--dark);
+      overflow: hidden;
+    }
+    .stage {
+      position: relative;
+      width: min(420px, 100vw);
+      height: min(700px, 100svh);
+      min-height: 600px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .heart {
+      position: absolute;
+      color: #f5b6c0;
+      opacity: .8;
+      user-select: none;
+      animation: float 5s ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      from { transform: translateY(0) rotate(-8deg); }
+      to { transform: translateY(-13px) rotate(8deg); }
+    }
+    .letter {
+      position: absolute;
+      left: 14.3%;
+      top: 20%;
+      width: 71.4%;
+      height: 59.3%;
+      background: #f7c4ca;
+      border: 3px solid #d87889;
+      text-align: center;
+    }
+    .bar {
+      height: 35px;
+      background: #ed9ba8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .top-hearts {
+      margin-top: 12px;
+      color: #e85d75;
+      font-size: 18px;
+      letter-spacing: 5px;
+    }
+    #message {
+      margin: 12px 8px 0;
+      font-size: 19px;
+      line-height: 1.35;
+      font-weight: bold;
+    }
+    .cat {
+      position: relative;
+      width: 120px;
+      height: 108px;
+      margin: 18px auto 0;
+    }
+    .pixel {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #17121d;
+    }
+    .eye {
+      position: absolute;
+      top: 47px;
+      width: 12px;
+      height: 12px;
+      background: white;
+    }
+    .eye.left { left: 25px; }
+    .eye.right { left: 61px; }
+    .cat-heart {
+      position: absolute;
+      top: 69px;
+      left: 50px;
+      color: #f04460;
+      font-size: 22px;
+    }
+    .buttons {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 22px;
+      height: 44px;
+    }
+    button {
+      position: absolute;
+      top: 0;
+      border: 0;
+      border-radius: 2px;
+      padding: 11px 22px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #yes {
+      left: 25%;
+      background: var(--pink);
+      color: white;
+      font-weight: bold;
+    }
+    #no {
+      left: 63%;
+      background: white;
+      color: #d85b70;
+    }
+    #celebration {
+      display: none;
+      margin: 12px 8px;
+      font-weight: bold;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    .confetti {
+      position: absolute;
+      pointer-events: none;
+      animation: pop 1.8s ease-out forwards;
+    }
+    @keyframes pop {
+      0% { transform: translateY(0) scale(.7); opacity: 1; }
+      100% { transform: translateY(-180px) scale(1.4); opacity: 0; }
+    }
+    @media (max-height: 620px) {
+      .stage { transform: scale(.88); transform-origin: center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" aria-label="Love Letter">
+    <section id="background-hearts" aria-hidden="true"></section>
+    <div class="letter">
+      <div class="bar"><span>LOVE</span><span>□ □ □</span></div>
+      <div class="top-hearts">♥ ♥ ♥ ♥</div>
+      <p id="message">Happy 1 month, my love ♥<br>Still love me?</p>
+      <div class="cat" aria-label="Pixel cat">
+        <div id="cat-pixels"></div>
+        <span class="eye left"></span>
+        <span class="eye right"></span>
+        <span class="cat-heart">♥</span>
+      </div>
+      <p id="celebration">One month of happiness,<br>and a lifetime to go! 💗</p>
+      <div class="buttons" id="buttons">
+        <button id="yes" type="button">YES ❤️</button>
+        <button id="no" type="button">NO</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    const bg = document.getElementById('background-hearts');
+    for (let i = 0; i < 45; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = '♥';
+      h.style.left = (2 + Math.random() * 96) + '%';
+      h.style.top = (2 + Math.random() * 94) + '%';
+      h.style.fontSize = (8 + Math.random() * 10) + 'px';
+      h.style.color = ['#f5b6c0', '#ee8296', '#ffd0d5'][Math.floor(Math.random() * 3)];
+      h.style.animationDelay = (Math.random() * 3) + 's';
+      bg.appendChild(h);
+    }
+
+    const pattern = [
+      '0010000100',
+      '0111001110',
+      '1111111111',
+      '1110110111',
+      '1111111111',
+      '1111111111',
+      '0111111110',
+      '0011111100',
+      '0001101100'
+    ];
+    const pixels = document.getElementById('cat-pixels');
+    pattern.forEach((line, row) => {
+      [...line].forEach((value, col) => {
+        if (value === '1') {
+          const p = document.createElement('span');
+          p.className = 'pixel';
+          p.style.left = (col * 12) + 'px';
+          p.style.top = (row * 12) + 'px';
+          pixels.appendChild(p);
+        }
+      });
+    });
+
+    const no = document.getElementById('no');
+    function moveNo() {
+      const area = document.querySelector('.buttons');
+      const maxX = Math.max(0, area.clientWidth - no.offsetWidth);
+      const maxY = Math.max(0, area.clientHeight - no.offsetHeight);
+      no.style.left = Math.random() * maxX + 'px';
+      no.style.top = Math.random() * maxY + 'px';
+    }
+    no.addEventListener('pointerenter', moveNo);
+    no.addEventListener('click', moveNo);
+
+    document.getElementById('yes').addEventListener('click', () => {
+      document.getElementById('message').innerHTML = 'Yayyy! I love you! ❤️';
+      document.getElementById('buttons').style.display = 'none';
+      document.getElementById('celebration').style.display = 'block';
+      const colors = ['#ff4568', '#ffb6c1', '#ffcc66', '#d78bff'];
+      for (let i = 0; i < 45; i++) {
+        const item = document.createElement('span');
+        item.className = 'confetti';
+        item.textContent = ['♥', '★', '💗'][Math.floor(Math.random() * 3)];
+        item.style.left = (5 + Math.random() * 90) + '%';
+        item.style.top = (45 + Math.random() * 45) + '%';
+        item.style.fontSize = (15 + Math.random() * 14) + 'px';
+        item.style.color = colors[Math.floor(Math.random() * colors.length)];
+        item.style.animationDelay = (Math.random() * .8) + 's';
+        document.querySelector('.stage').appendChild(item);
+      }
+    });
+  </script>
+</body>
+</html>
